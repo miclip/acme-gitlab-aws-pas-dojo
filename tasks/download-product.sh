@@ -64,6 +64,6 @@ cat /var/version && echo ""
                         --path /stemcell_version?)" \
                         >> assign-stemcell-config/config.yml
 
-    { printf "\nFinished creating config file for assign-stemcell."; } 2> /dev/null
+    { printf "\nFinished creating config file for assign-stemcell.\n"; } 2> /dev/null
     # code_snippet assign-stemcell-support end
 # code_snippet download-product end
