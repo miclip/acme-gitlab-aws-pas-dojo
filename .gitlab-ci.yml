@@ -5,9 +5,11 @@ image: registry.gitlab.com/miclip/acme-gitlab-aws-pas-dojo/platform-automation:2
 
 before_script:
   - echo "Before script section"
+  - echo $pivnet_token
    
 after_script:
   - echo "After script section"
+
 
 
 stages:
