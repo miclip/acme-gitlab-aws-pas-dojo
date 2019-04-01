@@ -43,7 +43,7 @@ create-infrastructure:
   script:
     - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform plan -out=pcf.tfplan -var-file=${VARS_FILE} terraforming-pas
-   # - terraform apply pcf.tfplan
+    - terraform apply pcf.tfplan
 
      
 fetch_opsman:

@@ -1,4 +1,4 @@
-env_name                        =       "miclip-sb"
+env_name                        =       "sandbox"
 dns_suffix                      =       "miclip.io"
 region                          =       "us-east-2"
 availability_zones              =       ["us-east-2a", "us-east-2c"]
