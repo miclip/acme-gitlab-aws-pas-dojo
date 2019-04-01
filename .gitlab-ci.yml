@@ -68,7 +68,7 @@ configure-authentication:
   stage: configure
   variables:
     VARS_FILES: ""
-    FILES_GLOB: env/mlsb/env.yml
+    FILES_GLOB: config/mlsb/auth.yml
     ENV_FILE: mlsb/env.yml
     AUTH_CONFIG_FILE: mlsb/auth.yml
     VAR_PREFIX: ENV
