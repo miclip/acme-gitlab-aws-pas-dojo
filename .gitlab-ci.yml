@@ -33,6 +33,7 @@ create-infrastructure:
     S3_BUCKET_TERRAFORM: miclip-terraform
     S3_ENDPOINT: http://s3.amazonaws.com
     S3_REGION: us-east-2
+    VARS_FILE: vars/sandbox/terraform.tfvars
     AWS_ACCESS_KEY_ID: $aws_access_key_id
     AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     TF_VAR_access_key: $aws_access_key_id
@@ -41,7 +42,7 @@ create-infrastructure:
     TF_VAR_ssl_private_key: $ssl_private_key
   script:
     - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="region=${S3_REGION}" terraforming-pas
-    - terraform plan -out=pcf.tfplan terraforming-pas
+    - terraform plan -out=pcf.tfplan -var-file=${VARS_FILE} terraforming-pas
    # - terraform apply pcf.tfplan
 
      
