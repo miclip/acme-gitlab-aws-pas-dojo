@@ -85,7 +85,7 @@ fetch_healthwatch:
 install_opsman:
   stage: deploy
   dependencies: 
-    - fetch
+    - fetch_opsman
   variables:
     CONFIG_FILE: download-product-configs/healthwatch.yml
     VARS_FILES: ""
