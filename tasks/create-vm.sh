@@ -15,12 +15,12 @@ if [ -e "state/$STATE_FILE" ]; then
 fi
 
 export IMAGE_FILE
-IMAGE_FILE="$(find image/*.{yml,ova,raw} 2>/dev/null | head -n1)"
+IMAGE_FILE="$(find $IMAGE_FILES/*.{yml,ova,raw} 2>/dev/null | head -n1)"
 
 if [ -z "$IMAGE_FILE" ]; then
     echo "No image file found in image input."
     echo "Contents of image input:"
-    ls -al image
+    ls -al ${IMAGE_FILES}
     exit 1
 fi
 

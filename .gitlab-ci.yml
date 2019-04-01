@@ -88,10 +88,10 @@ install_opsman:
   dependencies: 
     - fetch_opsman
   variables:
-    CONFIG_FILE: download-product-configs/healthwatch.yml
-    VARS_FILES: ""
+    IMAGE_FILES: downloaded-files
+    VARS_FILES: vars/mlsb/opsman.yml
     OPSMAN_CONFIG_FILE: opsman.yml
-    STATE_FILE: state.ym
+    STATE_FILE: mlsb/state.yml
   script:
     - tasks/create-vm.sh
 
