@@ -24,9 +24,14 @@ test1:
 fetch_opsman:
   stage: fetch
   variables:
-    CONFIG_FILE: download-product-configs/opsman.yml
+    CONFIG_FILE: interpolated-files/opsman.yml
     VARS_FILES: ""
-  script: tasks/download-product.sh
+    FILES_GLOB: download-product-configs/opsman.yml
+    VAR_PREFIX: OPSMAN
+    OPSMAN_pivnet_token: $pivnet_token
+  script: 
+   - tasks/gitlab-interpolate.sh
+   - tasks/download-product.sh
 
 
 deploy1:
