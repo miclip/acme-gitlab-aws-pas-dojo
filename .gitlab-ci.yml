@@ -67,9 +67,12 @@ fetch_healthwatch:
 configure-authentication:
   stage: configure
   variables:
+    VARS_FILES: ""
+    FILES_GLOB: env/mlsb/env.yml
     ENV_FILE: mlsb/env.yml
     AUTH_CONFIG_FILE: mlsb/auth.yml
-  script: 
+  script:
+   - tasks/gitlab-interpolate.sh
    - tasks/configure-authentication.sh
 
 
