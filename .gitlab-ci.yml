@@ -56,7 +56,8 @@ destroy-infrastructure:
 fetch_opsman:
   stage: fetch
   artifacts:
-    paths:
+    name: image
+    paths:    
       - downloaded-files/*.*
     expire_in: 1 day
   variables:
