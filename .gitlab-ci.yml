@@ -41,9 +41,28 @@ create-infrastructure:
     TF_VAR_ssl_cert: $ssl_cert
     TF_VAR_ssl_private_key: $ssl_private_key
   script:
-    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb" -backend-config="region=${S3_REGION}" terraforming-pas
+    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb/terraform.tfstate" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform plan -out=pcf.tfplan -var-file=${VARS_FILE} terraforming-pas
     - terraform apply pcf.tfplan
+
+destroy-infrastructure:
+  stage: terraform
+  image: pcfnorm/rootfs:1.0.28
+  when: manual
+  variables:
+    S3_BUCKET_TERRAFORM: miclip-terraform
+    S3_ENDPOINT: http://s3.amazonaws.com
+    S3_REGION: us-east-2
+    VARS_FILE: vars/sandbox/terraform.tfvars
+    AWS_ACCESS_KEY_ID: $aws_access_key_id
+    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
+    TF_VAR_access_key: $aws_access_key_id
+    TF_VAR_secret_key: $aws_secret_access_key
+    TF_VAR_ssl_cert: $ssl_cert
+    TF_VAR_ssl_private_key: $ssl_private_key
+  script:
+    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb" -backend-config="region=${S3_REGION}" terraforming-pas
+    - terraform destroy -input=false -auto-approve -var-file=${VARS_FILE} terraforming-pas
 
      
 fetch_opsman:
