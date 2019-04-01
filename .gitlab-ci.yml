@@ -51,27 +51,14 @@ destroy-infrastructure:
   script:
     - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb/terraform.tfstate" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform destroy -input=false -auto-approve -var-file=${VARS_FILE} terraforming-pas
-
      
-fetch_opsman:
-  stage: fetch
-  artifacts:
-    name: image
-    paths:    
-      - downloaded-files/*.*
-    expire_in: 1 day
-  variables:
-    CONFIG_FILE: download-product-configs/opsman.yml
-    VARS_FILES: ""
-    FILES_GLOB: config/download-product-configs/opsman.yml
-    VAR_PREFIX: DLP
-    DLP_pivnet_token: $pivnet_token
-  script: 
-   - tasks/gitlab-interpolate.sh
-   - tasks/download-product.sh
 
 fetch_healthwatch:
   stage: fetch
+  artifacts:
+    paths:    
+      - downloaded-files/*.*
+      - downloaded-stemcells/*.*
   variables:
     CONFIG_FILE: download-product-configs/healthwatch.yml
     VARS_FILES: ""
@@ -83,15 +70,6 @@ fetch_healthwatch:
    - tasks/download-product.sh
 
 
-install_opsman:
-  stage: deploy
-  dependencies: 
-    - fetch_opsman
-  variables:
-    IMAGE_FILES: downloaded-files
-    VARS_FILES: vars/mlsb/opsman.yml
-    OPSMAN_CONFIG_FILE: opsman.yml
-    STATE_FILE: mlsb/state.yml
-  script:
-    - tasks/create-vm.sh
+
+
 
