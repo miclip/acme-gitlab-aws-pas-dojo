@@ -12,6 +12,8 @@ cat /var/version && echo ""
       vars_files_args+=("--vars-file ${vf}")
     done
 
+    cat config/download-product-configs/opsman.yml
+
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
     om download-product \
