@@ -23,9 +23,9 @@ stages:
 fetch_opsman:
   stage: fetch
   variables:
-    CONFIG_FILE: interpolated-files/opsman.yml
+    CONFIG_FILE: download-product-configs/opsman.yml
     VARS_FILES: ""
-    FILES_GLOB: download-product-configs/opsman.yml
+    FILES_GLOB: config/download-product-configs/opsman.yml
     VAR_PREFIX: OPSMAN
     OPSMAN_pivnet_token: $pivnet_token
   script: 
