@@ -17,6 +17,7 @@ stages:
 bootstrap_terraform_state:
   stage: terraform
   image: pcfnorm/rootfs:1.0.28
+  when: manual
   variables:
     S3_BUCKET_TERRAFORM: miclip-terraform
     S3_ENDPOINT: http://s3.amazonaws.com
@@ -24,6 +25,25 @@ bootstrap_terraform_state:
     AWS_ACCESS_KEY_ID: $aws_access_key_id
     AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
   script: tasks/create-initial-terraform-state.sh
+
+create-infrastructure:
+  stage: terraform
+  image: pcfnorm/rootfs:1.0.28
+  variables:
+    S3_BUCKET_TERRAFORM: miclip-terraform
+    S3_ENDPOINT: http://s3.amazonaws.com
+    S3_REGION: us-east-2
+    AWS_ACCESS_KEY_ID: $aws_access_key_id
+    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
+    TF_VAR_ACCESS_KEY: $aws_access_key_id
+    TF_VAR_SECRET_KEY: $aws_secret_access_key
+    TF_VAR_SSL_CERT: $ssl_cert
+    TF_VAR_SSL_PRIVATE_KEY: $ssl_private_key
+  script:
+    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="region=${S3_REGION}" 
+    - terraform plan -out=pcf.tfplan terraform-pas
+   # - terraform apply pcf.tfplan
+
      
 fetch_opsman:
   stage: fetch
