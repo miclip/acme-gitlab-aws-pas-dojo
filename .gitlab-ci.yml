@@ -14,18 +14,6 @@ stages:
   - fetch
   - deploy
 
-bootstrap_terraform_state:
-  stage: terraform
-  image: pcfnorm/rootfs:1.0.28
-  when: manual
-  variables:
-    S3_BUCKET_TERRAFORM: miclip-terraform
-    S3_ENDPOINT: http://s3.amazonaws.com
-    S3_REGION: us-east-2
-    AWS_ACCESS_KEY_ID: $aws_access_key_id
-    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
-  script: tasks/create-initial-terraform-state.sh
-
 create-infrastructure:
   stage: terraform
   image: pcfnorm/rootfs:1.0.28
@@ -33,7 +21,7 @@ create-infrastructure:
     S3_BUCKET_TERRAFORM: miclip-terraform
     S3_ENDPOINT: http://s3.amazonaws.com
     S3_REGION: us-east-2
-    VARS_FILE: vars/sandbox/terraform.tfvars
+    VARS_FILE: vars/mlsb/terraform.tfvars
     AWS_ACCESS_KEY_ID: $aws_access_key_id
     AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     TF_VAR_access_key: $aws_access_key_id
@@ -53,7 +41,7 @@ destroy-infrastructure:
     S3_BUCKET_TERRAFORM: miclip-terraform
     S3_ENDPOINT: http://s3.amazonaws.com
     S3_REGION: us-east-2
-    VARS_FILE: vars/sandbox/terraform.tfvars
+    VARS_FILE: vars/mlsb/terraform.tfvars
     AWS_ACCESS_KEY_ID: $aws_access_key_id
     AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     TF_VAR_access_key: $aws_access_key_id
@@ -61,12 +49,16 @@ destroy-infrastructure:
     TF_VAR_ssl_cert: $ssl_cert
     TF_VAR_ssl_private_key: $ssl_private_key
   script:
-    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb" -backend-config="region=${S3_REGION}" terraforming-pas
+    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb/terraform.tfstate" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform destroy -input=false -auto-approve -var-file=${VARS_FILE} terraforming-pas
 
      
 fetch_opsman:
   stage: fetch
+  artifacts:
+    paths:
+      - downloaded-files/*.*
+    expire_in: 1 day
   variables:
     CONFIG_FILE: download-product-configs/opsman.yml
     VARS_FILES: ""
@@ -90,7 +82,15 @@ fetch_healthwatch:
    - tasks/download-product.sh
 
 
-deploy1:
+install_opsman:
   stage: deploy
+  dependencies: 
+    - fetch
+  variables:
+    CONFIG_FILE: download-product-configs/healthwatch.yml
+    VARS_FILES: ""
+    OPSMAN_CONFIG_FILE: opsman.yml
+    STATE_FILE: state.ym
   script:
-    - echo "Do your deploy here"
+    - tasks/create-vm.sh
+
