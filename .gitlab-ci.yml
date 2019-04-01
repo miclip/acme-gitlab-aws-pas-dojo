@@ -3,16 +3,10 @@
 # Download the Platform Automation image from Pivnet and push the image to your Gitlab repository 
 image: registry.gitlab.com/miclip/acme-gitlab-aws-pas-dojo/platform-automation:2.1.1-beta
 
-before_script:
-  - echo "Before script section"
-   
-after_script:
-  - echo "After script section"
-
 stages:
   - terraform
+  - configure
   - fetch
-  - deploy
 
 create-infrastructure:
   stage: terraform
@@ -70,6 +64,12 @@ fetch_healthwatch:
    - tasks/download-product.sh
 
 
-
+configure-authentication:
+  stage: configure
+  variables:
+    ENV_FILE: mlsb/env.yml
+    AUTH_CONFIG_FILE: mlsb/auth.yml
+  script: 
+   - tasks/configure-authentication.sh
 
 
