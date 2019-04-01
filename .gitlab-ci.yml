@@ -17,7 +17,7 @@ test1:
   script: tasks/test.sh
      
 fetch_opsman:
-  stage: fetch
+  stage: build
   variables:
     CONFIG_FILE: download-product-config/opsman.yml
   script: tasks/download-product.sh
