@@ -2,7 +2,11 @@
 
 cat /var/version && echo ""
 
+    
+
     set -eux
+
+    echo $pivnet_token
 
     vars_files_args=("")
     for vf in ${VARS_FILES}
