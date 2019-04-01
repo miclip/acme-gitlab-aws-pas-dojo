@@ -12,18 +12,17 @@ cat /var/version && echo ""
       vars_files_args+=("--vars-file ${vf}")
     done
 
-    cat config/download-product-configs/opsman.yml
 
     # ${vars_files_args[@] needs to be globbed to pass through properly
     # shellcheck disable=SC2068
     om download-product \
-       --config config/"${CONFIG_FILE}" ${vars_files_args[@]} \
+       --config "${CONFIG_FILE}" ${vars_files_args[@]} \
        --output-directory downloaded-files
 
     { printf "\nReading product details..."; } 2> /dev/null
     # shellcheck disable=SC2068
     product_slug=$(om interpolate \
-      --config config/"${CONFIG_FILE}" ${vars_files_args[@]} \
+      --config "${CONFIG_FILE}" ${vars_files_args[@]} \
       --path /pivnet-product-slug)
 
     product_file=$(om interpolate \

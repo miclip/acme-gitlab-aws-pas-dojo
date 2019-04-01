@@ -7,7 +7,11 @@ if [ -z "$VAR_PREFIX" ]; then
     exit 1
 fi
 
+if [ ! -d "interpolated-files" ]; then 
+     mkdir interpolated-files
+fi 
+
 for file in $FILES_GLOB; do
     echo "interpolating $file"
-    om interpolate -c "$file" --vars-env "$VAR_PREFIX" > $file
+    om interpolate -c "$file" --vars-env "$VAR_PREFIX" > interpolated-files/"$(basename "$file")"
 done
