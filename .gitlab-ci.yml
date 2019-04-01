@@ -5,20 +5,24 @@ image: registry.gitlab.com/miclip/acme-gitlab-aws-pas-dojo/platform-automation:2
 
 before_script:
   - echo "Before script section"
-  - echo $pivnet_token
    
 after_script:
   - echo "After script section"
 
-
-
 stages:
+  - terraform
   - fetch
   - deploy
 
-# test1:
-#  stage: test
-#  script: tasks/test.sh
+bootstrap_terraform_state:
+  stage: terraform
+  variables:
+    S3_BUCKET_TERRAFORM: miclip-terraform
+    S3_ENDPOINT: http://s3-sa-east-2.amazonaws.com
+    S3_REGION: us-east-2
+    AWS_ACCESS_KEY_ID: $aws_access_key_id
+    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
+  script: tasks/create-initial-terraform-state.sh
      
 fetch_opsman:
   stage: fetch
