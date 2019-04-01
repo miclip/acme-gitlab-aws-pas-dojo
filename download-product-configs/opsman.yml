@@ -1,0 +1,7 @@
+---
+pivnet-api-token: ((pivnet_token))
+pivnet-file-glob: "*aws*.yml"
+pivnet-product-slug: "ops-manager"
+product-version: "2.4.5"
+download-stemcell: false
+stemcell-iaas: "aws"
