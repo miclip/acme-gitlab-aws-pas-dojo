@@ -40,7 +40,7 @@ create-infrastructure:
     TF_VAR_SSL_CERT: $ssl_cert
     TF_VAR_SSL_PRIVATE_KEY: $ssl_private_key
   script:
-    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="region=${S3_REGION}" 
+    - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform plan -out=pcf.tfplan terraforming-pas
    # - terraform apply pcf.tfplan
 
