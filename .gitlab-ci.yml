@@ -71,6 +71,10 @@ configure-authentication:
     FILES_GLOB: env/mlsb/env.yml
     ENV_FILE: mlsb/env.yml
     AUTH_CONFIG_FILE: mlsb/auth.yml
+    VAR_PREFIX: ENV
+    ENV_opsman_user_username: $opsman_user_username
+    ENV_opsman_user_password: $opsman_user_password
+    ENV_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
   script:
    - tasks/gitlab-interpolate.sh
    - tasks/configure-authentication.sh
