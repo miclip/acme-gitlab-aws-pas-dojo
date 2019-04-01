@@ -16,9 +16,10 @@ stages:
 
 bootstrap_terraform_state:
   stage: terraform
+  image: pcfnorm/rootfs:1.0.28
   variables:
     S3_BUCKET_TERRAFORM: miclip-terraform
-    S3_ENDPOINT: http://s3-sa-east-2.amazonaws.com
+    S3_ENDPOINT: http://s3.amazonaws.com
     S3_REGION: us-east-2
     AWS_ACCESS_KEY_ID: $aws_access_key_id
     AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
