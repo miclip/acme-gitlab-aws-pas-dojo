@@ -13,13 +13,12 @@ after_script:
 
 
 stages:
-  - test
   - fetch
   - deploy
 
-test1:
-  stage: test
-  script: tasks/test.sh
+# test1:
+#  stage: test
+#  script: tasks/test.sh
      
 fetch_opsman:
   stage: fetch
