@@ -15,3 +15,7 @@ for file in $FILES_GLOB; do
     echo "interpolating $file"
     om interpolate -c "$file" --vars-env "$VAR_PREFIX" > interpolated-files/"$(basename "$file")"
 done
+
+DIR=$(dirname "${FILES_GLOB}")
+cp -R ./interpolated-files/*.* "${DIR}/"
+rm -rf ./interpolated-files
