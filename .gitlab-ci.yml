@@ -20,6 +20,7 @@ fetch_opsman:
   stage: build
   variables:
     CONFIG_FILE: download-product-config/opsman.yml
+    VARS_FILES: ""
   script: tasks/download-product.sh
 
 
