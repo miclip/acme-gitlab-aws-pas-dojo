@@ -7,18 +7,20 @@ stages:
   - setup
   - configure-opsman
   - configure-pas
-  
+  - apply-changes
+
+variables:
+  S3_BUCKET_TERRAFORM: miclip-terraform
+  S3_ENDPOINT: http://s3.amazonaws.com
+  S3_REGION: us-east-2
+  AWS_ACCESS_KEY_ID: $aws_access_key_id
+  AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
 
 create-infrastructure:
   stage: setup
   image: pcfnorm/rootfs:1.0.28
   variables:
-    S3_BUCKET_TERRAFORM: miclip-terraform
-    S3_ENDPOINT: http://s3.amazonaws.com
-    S3_REGION: us-east-2
     VARS_FILE: vars/mlsb/terraform.tfvars
-    AWS_ACCESS_KEY_ID: $aws_access_key_id
-    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     TF_VAR_access_key: $aws_access_key_id
     TF_VAR_secret_key: $aws_secret_access_key
     TF_VAR_ssl_cert: $ssl_cert
@@ -33,12 +35,7 @@ destroy-infrastructure:
   image: pcfnorm/rootfs:1.0.28
   when: manual
   variables:
-    S3_BUCKET_TERRAFORM: miclip-terraform
-    S3_ENDPOINT: http://s3.amazonaws.com
-    S3_REGION: us-east-2
     VARS_FILE: vars/mlsb/terraform.tfvars
-    AWS_ACCESS_KEY_ID: $aws_access_key_id
-    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     TF_VAR_access_key: $aws_access_key_id
     TF_VAR_secret_key: $aws_secret_access_key
     TF_VAR_ssl_cert: $ssl_cert
@@ -51,11 +48,6 @@ fetch-healthwatch:
   stage: setup
   when: manual
   variables:
-    S3_BUCKET_TERRAFORM: miclip-terraform
-    S3_ENDPOINT: http://s3.amazonaws.com
-    S3_REGION: us-east-2
-    AWS_ACCESS_KEY_ID: $aws_access_key_id
-    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     CONFIG_FILE: download-product-configs/healthwatch.yml
     VARS_FILES: ""
     FILES_GLOB: config/download-product-configs/healthwatch.yml
@@ -71,11 +63,6 @@ fetch-pas:
   stage: setup
   when: manual
   variables:
-    S3_BUCKET_TERRAFORM: miclip-terraform
-    S3_ENDPOINT: http://s3.amazonaws.com
-    S3_REGION: us-east-2
-    AWS_ACCESS_KEY_ID: $aws_access_key_id
-    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     CONFIG_FILE: download-product-configs/pas.yml
     VARS_FILES: ""
     FILES_GLOB: config/download-product-configs/pas.yml
@@ -114,25 +101,47 @@ configure-opsman:
 configure-pas:
   stage: configure-pas
   variables:
-    S3_BUCKET_TERRAFORM: miclip-terraform
-    S3_ENDPOINT: http://s3.amazonaws.com
-    S3_REGION: us-east-2
-    AWS_ACCESS_KEY_ID: $aws_access_key_id
-    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
-    FILES_GLOB: "env/mlsb/env.yml"
+    FILES_GLOB: "env/mlsb/env.yml var/mlsb/pas.yml"
     ENV_FILE: mlsb/env.yml
     PRODUCT_FILES: pas/downloaded-files
-    CONFIG_FILE: ""
+    CONFIG_FILE: mlsb/pas.yml
+    ASSIGN_CONFIG_FILE: pas/assign-stemcell-config/config.yml
     PRODUCT_NAME: pas
+    STEMCELL_DIR: pas/downloaded-files
+    VAR_PREFIX: PAS
+    PAS_pivnet_token: $pivnet_token
+    PAS_opsman_user_username: $opsman_user_username
+    PAS_opsman_user_password: $opsman_user_password
+    PAS_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    PAS_cloud_controller_encrypt_key_secret: $cloud_controller_encrypt_key_secret
+    PAS_monitor_email: $monitor_email
+    PAS_credhub_secret: $credhub_secret
+    PAS_ssl_cert: $ssl_cert
+    PAS_ssl_private_key: $ssl_private_key
+    PAS_uaa_cert_pem: uaa_cert_pem
+    PAS_uaa_cert_private_key: uaa_cert_private_key
+  script:
+    - tasks/download-product-s3.sh
+    - tasks/gitlab-interpolate.sh
+    - tasks/upload-stage-product.sh
+    - tasks/configure-product.sh
+    - tasks/upload-stemcell.sh
+    - tasks/assign-stemcell.sh
+
+
+apply-changes:
+  stage: apply-changes
+  variables:
+    FILES_GLOB: "env/mlsb/env.yml"
+    ENV_FILE: mlsb/env.yml
     VAR_PREFIX: PAS
     PAS_pivnet_token: $pivnet_token
     PAS_opsman_user_username: $opsman_user_username
     PAS_opsman_user_password: $opsman_user_password
     PAS_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
   script:
-    - tasks/download-product-s3.sh
-    - tasks/gitlab-interpolate.sh
-    - tasks/upload-product.sh
+    - tasks/apply-changes.sh
+
 
 
 
