@@ -65,7 +65,7 @@ fetch-healthwatch:
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
-   - upload-product-s3.sh
+   - tasks/upload-product-s3.sh
 
 fetch-pas:
   stage: setup
@@ -85,7 +85,7 @@ fetch-pas:
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
-   - upload-product-s3.sh
+   - tasks/upload-product-s3.sh
 
 
 configure-opsman:
@@ -123,8 +123,9 @@ configure-pas:
     ENV_FILE: mlsb/env.yml
     PRODUCT_FILES: pas/downloaded-product
     CONFIG_FILE: ""
+    PRODUCT_NAME: pas
   script:
-    - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas" pas --recursive
+    - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh
     - tasks/upload-product.sh
 
