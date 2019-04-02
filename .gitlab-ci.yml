@@ -6,7 +6,8 @@ image: registry.gitlab.com/miclip/acme-gitlab-aws-pas-dojo/platform-automation:2
 stages:
   - terraform
   - fetch
-  - configure
+  - configure-opsman
+  - configure-pas
   
 
 create-infrastructure:
@@ -83,7 +84,7 @@ fetch_pas:
 
 
 configure-opsman:
-  stage: configure
+  stage: configure-opsman
   variables:
     VARS_FILES: vars/mlsb/director.yml
     OPS_FILES: ""
@@ -106,7 +107,7 @@ configure-opsman:
    - tasks/apply-director-changes.sh
 
 configure-pas:
-  stage: configure
+  stage: configure-pas
   dependencies:
     - configure-opsman
     - fetch-pas
