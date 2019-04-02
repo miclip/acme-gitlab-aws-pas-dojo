@@ -19,4 +19,4 @@ done
 om --env env/"${ENV_FILE}" configure-director \
     --config "config/${DIRECTOR_CONFIG_FILE}" \
     ${vars_files_args[@]} \
-    ${ops_files_args[@]}
+    ${ops_files_args[@]} --trace
