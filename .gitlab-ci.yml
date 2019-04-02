@@ -68,6 +68,7 @@ configure-opsman:
   stage: configure
   variables:
     VARS_FILES: ""
+    OPS_FILES: ""
     FILES_GLOB: vars/mlsb/*.yml
     ENV_FILE: mlsb/env.yml
     AUTH_CONFIG_FILE: vars/mlsb/auth.yml
