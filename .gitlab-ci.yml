@@ -124,8 +124,11 @@ configure-pas:
     PRODUCT_FILES: pas/downloaded-files
     CONFIG_FILE: ""
     PRODUCT_NAME: pas
-    VAR_PREFIX: DLP
-    DLP_pivnet_token: $pivnet_token
+    VAR_PREFIX: PAS
+    PAS_pivnet_token: $pivnet_token
+    PAS_opsman_user_username: $opsman_user_username
+    PAS_opsman_user_password: $opsman_user_password
+    PAS_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
   script:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh
