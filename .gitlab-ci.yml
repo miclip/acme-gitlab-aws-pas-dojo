@@ -65,9 +65,7 @@ fetch-healthwatch:
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
-   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-files "s3://${S3_BUCKET_TERRAFORM}/artifacts/healthwatch/" --recursive
-   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-stemcell "s3://${S3_BUCKET_TERRAFORM}/artifacts/healthwatch/" --recursive
-   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp assign-stemcell-config "s3://${S3_BUCKET_TERRAFORM}/artifacts/healthwatch/" --recursive
+   - upload-product-s3.sh
 
 fetch-pas:
   stage: fetch
@@ -86,9 +84,7 @@ fetch-pas:
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
-   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-files "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas/" --recursive
-   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-stemcell "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas/" --recursive
-   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp assign-stemcell-config "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas/" --recursive
+   - upload-product-s3.sh
 
 
 configure-opsman:
@@ -124,7 +120,7 @@ configure-pas:
     AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     FILES_GLOB: "env/mlsb/env.yml"
     ENV_FILE: mlsb/env.yml
-    PRODUCT_FILES: pas/downloaded-files
+    PRODUCT_FILES: pas/downloaded-product
     CONFIG_FILE: ""
   script:
     - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas" pas --recursive
