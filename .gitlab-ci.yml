@@ -4,14 +4,13 @@
 image: registry.gitlab.com/miclip/acme-gitlab-aws-pas-dojo/platform-automation:2.1.1-beta
 
 stages:
-  - terraform
-  - fetch
+  - setup
   - configure-opsman
   - configure-pas
   
 
 create-infrastructure:
-  stage: terraform
+  stage: setup
   image: pcfnorm/rootfs:1.0.28
   variables:
     S3_BUCKET_TERRAFORM: miclip-terraform
@@ -30,7 +29,7 @@ create-infrastructure:
     - terraform apply pcf.tfplan
 
 destroy-infrastructure:
-  stage: terraform
+  stage: setup
   image: pcfnorm/rootfs:1.0.28
   when: manual
   variables:
@@ -49,7 +48,7 @@ destroy-infrastructure:
     - terraform destroy -input=false -auto-approve -var-file=${VARS_FILE} terraforming-pas
      
 fetch-healthwatch:
-  stage: fetch
+  stage: setup
   when: manual
   variables:
     S3_BUCKET_TERRAFORM: miclip-terraform
@@ -62,13 +61,14 @@ fetch-healthwatch:
     FILES_GLOB: config/download-product-configs/healthwatch.yml
     VAR_PREFIX: DLP
     DLP_pivnet_token: $pivnet_token
+    PRODUCT_NAME: healthwatch
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
    - upload-product-s3.sh
 
 fetch-pas:
-  stage: fetch
+  stage: setup
   when: manual
   variables:
     S3_BUCKET_TERRAFORM: miclip-terraform
@@ -81,6 +81,7 @@ fetch-pas:
     FILES_GLOB: config/download-product-configs/pas.yml
     VAR_PREFIX: DLP
     DLP_pivnet_token: $pivnet_token
+    PRODUCT_NAME: pas
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
