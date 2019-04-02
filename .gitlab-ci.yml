@@ -64,19 +64,26 @@ fetch_healthwatch:
    - tasks/download-product.sh
 
 
-configure-authentication:
+configure-opsman:
   stage: configure
   variables:
     VARS_FILES: ""
-    FILES_GLOB: config/mlsb/auth.yml
+    FILES_GLOB: vars/mlsb/*.yml
     ENV_FILE: mlsb/env.yml
-    AUTH_CONFIG_FILE: mlsb/auth.yml
-    VAR_PREFIX: ENV
-    ENV_opsman_user_username: $opsman_user_username
-    ENV_opsman_user_password: $opsman_user_password
-    ENV_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    AUTH_CONFIG_FILE: vars/mlsb/auth.yml
+    VAR_PREFIX: OPSMAN
+    DIRECTOR_CONFIG_FILE: mlsb/director.yml
+    OPSMAN_opsman_user_username: $opsman_user_username
+    OPSMAN_opsman_user_password: $opsman_user_password
+    OPSMAN_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    OPSMAN_opsman_keypair: ((opsman_keypair))
+    OPSMAN_vms_security_group: ((vms_security_group))
+    OPSMAN_trusted_certs: ((trusted_certs))
+    OPSMAN_opsman_ssh_private_key: ((opsman_ssh_private_key))
   script:
    - tasks/gitlab-interpolate.sh
    - tasks/configure-authentication.sh
+   - tasks/configure-director.sh
+   - tasks/apply-director-changes.sh
 
 

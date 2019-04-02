@@ -1,0 +1,112 @@
+az-configuration:
+- name: ((az1_name))
+  iaas_configuration_guid: ((az1_iaas_configuration_guid))
+- name: ((az2_name))
+  iaas_configuration_guid: ((az2_iaas_configuration_guid))
+network-assignment:
+  network:
+    name: ((network_infra_name))
+  other_availability_zones: []
+  singleton_availability_zone:
+    name: ((az1_name))
+networks-configuration:
+  icmp_checks_enabled: false
+  networks:
+  - name: ((network_infra_name))
+    subnets:
+    - iaas_identifier: ((network_infra_subnet0_id))
+      cidr: ((network_infra_subnet0_cider))
+      dns: ((network_dns))
+      gateway: ((network_infra_subnet0_gateway))
+      reserved_ip_ranges: ((network_infra_subnet0_reserved_ranges))
+      availability_zone_names: ((network_infra_subnet0_az_names))
+    - iaas_identifier: ((network_infra_subnet1_id))
+      cidr: ((network_infra_subnet1_cider))
+      dns: ((network_dns))
+      gateway: ((network_infra_subnet1_gateway))
+      reserved_ip_ranges: ((network_infra_subnet1_reserved_ranges))
+      availability_zone_names: ((network_infra_subnet1_az_names))
+  - name: ((network_runtime_name))
+    subnets:
+    - iaas_identifier: ((network_pas_subnet0_id))
+      cidr: ((network_pas_subnet0_cider))
+      dns: ((network_dns))
+      gateway: ((network_pas_subnet0_gateway))
+      reserved_ip_ranges: ((network_pas_subnet0_reserved_ranges))
+      availability_zone_names: ((network_pas_subnet0_az_names))
+    - iaas_identifier: ((network_pas_subnet1_id))
+      cidr: ((network_pas_subnet1_cider))
+      dns: ((network_dns))
+      gateway: ((network_pas_subnet1_gateway))
+      reserved_ip_ranges: ((network_pas_subnet1_reserved_ranges))
+      availability_zone_names: ((network_pas_subnet1_az_names))
+  - name: ((network_svc_name))
+    subnets:
+    - iaas_identifier: subnet-0dead65e04e8b1af6
+      cidr: ((network_svc_subnet0_cider))
+      dns: ((network_dns))
+      gateway: ((network_svc_subnet0_gateway))
+      reserved_ip_ranges: ((network_svc_subnet0_reserved_ranges))
+      availability_zone_names: ((network_svc_subnet0_az_names))
+    - iaas_identifier: subnet-0e8cb1ead7fe213ec
+      cidr: ((network_svc_subnet1_cider))
+      dns: ((network_dns))
+      gateway: ((network_svc_subnet1_gateway))
+      reserved_ip_ranges: ((network_svc_subnet1_reserved_ranges))
+      availability_zone_names: ((network_svc_subnet1_az_names))
+properties-configuration:
+  director_configuration:
+    blobstore_type: local
+    bosh_recreate_on_next_deploy: true
+    bosh_recreate_persistent_disks_on_next_deploy: false
+    database_type: internal
+    director_worker_count: 5
+    encryption:
+      keys: []
+      providers: []
+    hm_emailer_options:
+      enabled: false
+    hm_pager_duty_options:
+      enabled: false
+    identification_tags: {}
+    job_configuration_on_tmpfs: false
+    keep_unreachable_vms: false
+    local_blobstore_options:
+      tls_enabled: true
+    ntp_servers_string: ((ntp_servers))
+    post_deploy_enabled: true
+    resurrector_enabled: true
+    retry_bosh_deploys: false
+    skip_director_drain: false
+  dns_configuration:
+    excluded_recursors: []
+    handlers: []
+  iaas_configuration:
+    additional_cloud_properties: {}
+    encrypted: false
+    guid: ((iaas_guid))
+    key_pair_name: ((iaas_keypair))
+    ssh_private_key: ((ssh_private_key))
+    name: default
+    region: ((az1_name))
+    security_group: ((iaas_security_group))
+  security_configuration:
+    generate_vm_passwords: true
+    opsmanager_root_ca_trusted_certs: true
+    trusted_certificates: ((trusted_certs))
+  syslog_configuration:
+    enabled: false
+resource-configuration:
+  compilation:
+    instances: automatic
+    instance_type:
+      id: automatic
+    internet_connected: false
+  director:
+    instances: automatic
+    persistent_disk:
+      size_mb: automatic
+    instance_type:
+      id: automatic
+    internet_connected: false
+vmextensions-configuration:
