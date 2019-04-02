@@ -45,7 +45,8 @@ cat /var/version && echo ""
       --input-tile "$product_file" \
       --output-tile "downloaded-product/${TILE_FILENAME}"
     else
-      cp "$product_file" downloaded-product
+      # space issue on gitlab
+      # cp "$product_file" downloaded-product
     fi
 
     { printf "\nChecking if stemcell was downloaded..."; } 2> /dev/null
