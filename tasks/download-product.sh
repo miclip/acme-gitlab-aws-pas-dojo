@@ -44,7 +44,7 @@ cat /var/version && echo ""
       winfs-injector \
       --input-tile "$product_file" \
       --output-tile "downloaded-product/${TILE_FILENAME}"
-    else
+    #else
       # space issue on gitlab
       # cp "$product_file" downloaded-product
     fi
