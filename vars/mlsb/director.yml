@@ -1,5 +1,6 @@
 az1_name: us-east-2a
 az2_name: us-east-2c
+aws_region: us-east-2
 az1_iaas_configuration_guid: f45007d820946d7afb68
 az2_iaas_configuration_guid: f45007d820946d7afb68
 network_dns: 10.0.0.2

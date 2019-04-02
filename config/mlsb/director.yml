@@ -88,12 +88,12 @@ properties-configuration:
     key_pair_name: ((iaas_keypair))
     ssh_private_key: ((ssh_private_key))
     name: default
-    region: ((az1_name))
+    region: ((aws_region))
     security_group: ((iaas_security_group))
   security_configuration:
     generate_vm_passwords: true
     opsmanager_root_ca_trusted_certs: true
-    trusted_certificates: ((trusted_certs))
+    trusted_certificates: 
   syslog_configuration:
     enabled: false
 resource-configuration:
