@@ -50,10 +50,6 @@ destroy-infrastructure:
      
 fetch-healthwatch:
   stage: fetch
-  artifacts:
-    paths:    
-      - downloaded-files/*.*
-      - downloaded-stemcells/*.*
   variables:
     CONFIG_FILE: download-product-configs/healthwatch.yml
     VARS_FILES: ""
@@ -63,16 +59,18 @@ fetch-healthwatch:
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
+   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-files "s3://${S3_BUCKET_TERRAFORM}/artifacts/healthwatch/" --recursive
+   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-stemcell "s3://${S3_BUCKET_TERRAFORM}/artifacts/healthwatch/" --recursive
+   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp assign-stemcell-config "s3://${S3_BUCKET_TERRAFORM}/artifacts/healthwatch/" --recursive
 
 fetch-pas:
   stage: fetch
-  artifacts:
-    expire_in: 1 day
-    paths:    
-      - downloaded-files/*.*
-      - downloaded-stemcells/*.*
-      - assign-stemcell-config/*.yml
   variables:
+    S3_BUCKET_TERRAFORM: miclip-terraform
+    S3_ENDPOINT: http://s3.amazonaws.com
+    S3_REGION: us-east-2
+    AWS_ACCESS_KEY_ID: $aws_access_key_id
+    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     CONFIG_FILE: download-product-configs/pas.yml
     VARS_FILES: ""
     FILES_GLOB: config/download-product-configs/pas.yml
@@ -81,6 +79,9 @@ fetch-pas:
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
+   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-files "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas/" --recursive
+   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp downloaded-stemcell "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas/" --recursive
+   - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp assign-stemcell-config "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas/" --recursive
 
 
 configure-opsman:
@@ -111,11 +112,17 @@ configure-pas:
   dependencies:
     - fetch-pas
   variables:
+    S3_BUCKET_TERRAFORM: miclip-terraform
+    S3_ENDPOINT: http://s3.amazonaws.com
+    S3_REGION: us-east-2
+    AWS_ACCESS_KEY_ID: $aws_access_key_id
+    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     FILES_GLOB: "env/mlsb/env.yml"
     ENV_FILE: mlsb/env.yml
-    PRODUCT_FILES: downloaded-files
+    PRODUCT_FILES: pas/downloaded-files
     CONFIG_FILE: ""
   script:
+    - aws s3 --endpoint-url $S3_ENDPOINT --region $S3_REGION cp "s3://${S3_BUCKET_TERRAFORM}/artifacts/pas" pas --recursive
     - tasks/gitlab-interpolate.sh
     - tasks/upload-product.sh
 
