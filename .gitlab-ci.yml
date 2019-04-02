@@ -5,8 +5,9 @@ image: registry.gitlab.com/miclip/acme-gitlab-aws-pas-dojo/platform-automation:2
 
 stages:
   - terraform
-  - configure
   - fetch
+  - configure
+  
 
 create-infrastructure:
   stage: terraform
@@ -46,7 +47,6 @@ destroy-infrastructure:
     - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb/terraform.tfstate" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform destroy -input=false -auto-approve -var-file=${VARS_FILE} terraforming-pas
      
-
 fetch_healthwatch:
   stage: fetch
   artifacts:
@@ -57,6 +57,24 @@ fetch_healthwatch:
     CONFIG_FILE: download-product-configs/healthwatch.yml
     VARS_FILES: ""
     FILES_GLOB: config/download-product-configs/healthwatch.yml
+    VAR_PREFIX: DLP
+    DLP_pivnet_token: $pivnet_token
+  script: 
+   - tasks/gitlab-interpolate.sh
+   - tasks/download-product.sh
+
+fetch_pas:
+  stage: fetch
+  artifacts:
+    expire_in: 1 day
+    paths:    
+      - downloaded-files/*.*
+      - downloaded-stemcells/*.*
+      - assign-stemcell-config/*.yml
+  variables:
+    CONFIG_FILE: download-product-configs/pas.yml
+    VARS_FILES: ""
+    FILES_GLOB: config/download-product-configs/pas.yml
     VAR_PREFIX: DLP
     DLP_pivnet_token: $pivnet_token
   script: 
@@ -86,5 +104,20 @@ configure-opsman:
    - tasks/configure-authentication.sh
    - tasks/configure-director.sh
    - tasks/apply-director-changes.sh
+
+configure-pas:
+  stage: configure
+  dependencies:
+    - configure-opsman
+    - fetch-pas
+  variables:
+    FILES_GLOB: "env/mlsb/env.yml"
+    ENV_FILE: mlsb/env.yml
+    PRODUCT_FILES: downloaded-files
+    CONFIG_FILE: ""
+  script:
+    - tasks/gitlab-interpolate.sh
+    - tasks/upload-product.sh
+
 
 
