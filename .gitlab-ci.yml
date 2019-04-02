@@ -50,7 +50,13 @@ destroy-infrastructure:
      
 fetch-healthwatch:
   stage: fetch
+  when: manual
   variables:
+    S3_BUCKET_TERRAFORM: miclip-terraform
+    S3_ENDPOINT: http://s3.amazonaws.com
+    S3_REGION: us-east-2
+    AWS_ACCESS_KEY_ID: $aws_access_key_id
+    AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     CONFIG_FILE: download-product-configs/healthwatch.yml
     VARS_FILES: ""
     FILES_GLOB: config/download-product-configs/healthwatch.yml
@@ -65,6 +71,7 @@ fetch-healthwatch:
 
 fetch-pas:
   stage: fetch
+  when: manual
   variables:
     S3_BUCKET_TERRAFORM: miclip-terraform
     S3_ENDPOINT: http://s3.amazonaws.com
@@ -109,8 +116,6 @@ configure-opsman:
 
 configure-pas:
   stage: configure-pas
-  dependencies:
-    - fetch-pas
   variables:
     S3_BUCKET_TERRAFORM: miclip-terraform
     S3_ENDPOINT: http://s3.amazonaws.com
