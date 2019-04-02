@@ -50,10 +50,11 @@ fetch-healthwatch:
   variables:
     CONFIG_FILE: download-product-configs/healthwatch.yml
     VARS_FILES: ""
+    PRODUCT_NAME: healthwatch
+    # interpolation
     FILES_GLOB: config/download-product-configs/healthwatch.yml
     VAR_PREFIX: DLP
-    DLP_pivnet_token: $pivnet_token
-    PRODUCT_NAME: healthwatch
+    DLP_pivnet_token: $pivnet_token    
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
@@ -65,24 +66,25 @@ fetch-pas:
   variables:
     CONFIG_FILE: download-product-configs/pas.yml
     VARS_FILES: ""
+    PRODUCT_NAME: pas
+    # interpolation
     FILES_GLOB: config/download-product-configs/pas.yml
     VAR_PREFIX: DLP
-    DLP_pivnet_token: $pivnet_token
-    PRODUCT_NAME: pas
+    DLP_pivnet_token: $pivnet_token    
   script: 
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
    - tasks/upload-product-s3.sh
 
-
 configure-opsman:
   stage: configure-opsman
   variables:
     VARS_FILES: vars/mlsb/director.yml
-    OPS_FILES: ""
-    FILES_GLOB: "vars/mlsb/director.yml vars/mlsb/auth.yml env/mlsb/env.yml"
+    OPS_FILES: ""    
     ENV_FILE: mlsb/env.yml
     AUTH_CONFIG_FILE: vars/mlsb/auth.yml
+    # interpolation
+    FILES_GLOB: "vars/mlsb/director.yml vars/mlsb/auth.yml env/mlsb/env.yml"
     VAR_PREFIX: OPSMAN
     DIRECTOR_CONFIG_FILE: mlsb/director.yml
     OPSMAN_opsman_user_username: $opsman_user_username
@@ -101,13 +103,15 @@ configure-opsman:
 configure-pas:
   stage: configure-pas
   variables:
-    FILES_GLOB: "env/mlsb/env.yml vars/mlsb/pas.yml"
+    # vars for scripts
     ENV_FILE: mlsb/env.yml
     PRODUCT_FILES: pas/downloaded-files
     CONFIG_FILE: mlsb/pas.yml
     ASSIGN_CONFIG_FILE: pas/assign-stemcell-config/config.yml
     PRODUCT_NAME: pas
     STEMCELL_DIR: pas/downloaded-files
+    # interpolation
+    FILES_GLOB: "env/mlsb/env.yml vars/mlsb/pas.yml"
     VAR_PREFIX: PAS
     PAS_pivnet_token: $pivnet_token
     PAS_opsman_user_username: $opsman_user_username
@@ -128,7 +132,6 @@ configure-pas:
     - tasks/upload-stemcell.sh
     - tasks/assign-stemcell.sh
 
-
 apply-changes:
   stage: apply-changes
   variables:
@@ -141,7 +144,3 @@ apply-changes:
     PAS_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
   script:
     - tasks/apply-changes.sh
-
-
-
-
