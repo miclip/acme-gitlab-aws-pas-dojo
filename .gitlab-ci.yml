@@ -48,7 +48,7 @@ destroy-infrastructure:
     - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb/terraform.tfstate" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform destroy -input=false -auto-approve -var-file=${VARS_FILE} terraforming-pas
      
-fetch_healthwatch:
+fetch-healthwatch:
   stage: fetch
   artifacts:
     paths:    
@@ -64,7 +64,7 @@ fetch_healthwatch:
    - tasks/gitlab-interpolate.sh
    - tasks/download-product.sh
 
-fetch_pas:
+fetch-pas:
   stage: fetch
   artifacts:
     expire_in: 1 day
@@ -109,7 +109,6 @@ configure-opsman:
 configure-pas:
   stage: configure-pas
   dependencies:
-    - configure-opsman
     - fetch-pas
   variables:
     FILES_GLOB: "env/mlsb/env.yml"
