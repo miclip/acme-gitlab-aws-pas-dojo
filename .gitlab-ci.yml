@@ -101,7 +101,7 @@ configure-opsman:
 configure-pas:
   stage: configure-pas
   variables:
-    FILES_GLOB: "env/mlsb/env.yml var/mlsb/pas.yml"
+    FILES_GLOB: "env/mlsb/env.yml vars/mlsb/pas.yml"
     ENV_FILE: mlsb/env.yml
     PRODUCT_FILES: pas/downloaded-files
     CONFIG_FILE: mlsb/pas.yml
