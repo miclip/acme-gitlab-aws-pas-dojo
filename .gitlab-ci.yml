@@ -121,7 +121,7 @@ configure-pas:
     AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
     FILES_GLOB: "env/mlsb/env.yml"
     ENV_FILE: mlsb/env.yml
-    PRODUCT_FILES: pas/downloaded-product
+    PRODUCT_FILES: pas/downloaded-files
     CONFIG_FILE: ""
     PRODUCT_NAME: pas
   script:
