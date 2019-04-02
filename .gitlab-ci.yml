@@ -67,7 +67,7 @@ fetch_healthwatch:
 configure-opsman:
   stage: configure
   variables:
-    VARS_FILES: vars/mlsb
+    VARS_FILES: vars/mlsb/*.yml
     OPS_FILES: ""
     FILES_GLOB: vars/mlsb/*.yml
     ENV_FILE: mlsb/env.yml
