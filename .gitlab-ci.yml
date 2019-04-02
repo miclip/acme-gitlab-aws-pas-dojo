@@ -80,7 +80,7 @@ configure-opsman:
   variables:
     VARS_FILES: vars/mlsb/director.yml
     OPS_FILES: ""
-    FILES_GLOB: "vars/mlsb/*.yml env/mlsb/env.yml"
+    FILES_GLOB: "vars/mlsb/director.yml vars/mlsb/auth.yml env/mlsb/env.yml"
     ENV_FILE: mlsb/env.yml
     AUTH_CONFIG_FILE: vars/mlsb/auth.yml
     VAR_PREFIX: OPSMAN
