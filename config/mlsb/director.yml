@@ -42,13 +42,13 @@ networks-configuration:
       availability_zone_names: ((network_pas_subnet1_az_names))
   - name: ((network_svc_name))
     subnets:
-    - iaas_identifier: subnet-0dead65e04e8b1af6
+    - iaas_identifier: ((network_svc_subnet0_id))
       cidr: ((network_svc_subnet0_cider))
       dns: ((network_dns))
       gateway: ((network_svc_subnet0_gateway))
       reserved_ip_ranges: ((network_svc_subnet0_reserved_ranges))
       availability_zone_names: ((network_svc_subnet0_az_names))
-    - iaas_identifier: subnet-0e8cb1ead7fe213ec
+    - iaas_identifier: ((network_svc_subnet1_id))
       cidr: ((network_svc_subnet1_cider))
       dns: ((network_dns))
       gateway: ((network_svc_subnet1_gateway))
