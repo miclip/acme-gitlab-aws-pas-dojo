@@ -3,7 +3,8 @@
 GitLab pipeline that terraforms and deploys PAS to AWS using scripts extracted from Platform Automation. Tested with a SaaS GitLab account but there's no reason it wouldn't work on prem. We didn't deploy GitLab runners into the AWS environment but that would be the ideal approach. 
 
 Note: 
-1. To commit and not trigger the pipeline append `[skip ci]` to your commit message
+1. To commit and not trigger the pipeline append `[skip ci]` to your commit message.
+1. Increase the job timeout from 1 hour to 4 hours, (Settings, CI CD, Runners).
 1. SaaS GitLab has a 1GB limit on internal `Artifact` storage so the pipeline utilities S3 to store Pivnet downloads. If you have the ability to control this using the `Artifact` `Dependency` mechanisms might simplify the pipeline. 
 1. We downloaded the Platform Automation docker image and pushed it to the internal Registry on `GitLab.com`. 
 1. The scripts from Platform Automation are pretty much plug-n-play with a couple of caveats. Concourse creates VARS and Directories based on the Task definition. GitLab won't do this so you'll have to either remove some of them or default unused vars in the `variables` declaration. In this example I tried not to modify the scripts as much as possible. It will simplify the pipeline to have `vars`, `config`, `env` & `state` directories at the root of the repo. The Platform Automation scripts assume they're created by Concourse but within GitLab you'd have to move things around or change the scripts. It is possible to pull in Artifacts from external repos but we didn't take that route. 
