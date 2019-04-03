@@ -134,7 +134,6 @@ configure-pas:
     - tasks/upload-stage-product.sh
     - tasks/configure-product.sh
     - tasks/upload-stemcell.sh
-    - tasks/assign-stemcell.sh
 
 configure-healthwatch:
   stage: configure-healthwatch
@@ -160,7 +159,6 @@ configure-healthwatch:
     - tasks/upload-stage-product.sh
 #    - tasks/configure-product.sh
 #    - tasks/upload-stemcell.sh
-#    - tasks/assign-stemcell.sh
 
 apply-changes:
   stage: apply-changes
