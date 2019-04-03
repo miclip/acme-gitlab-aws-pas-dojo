@@ -91,6 +91,7 @@ configure-opsman:
     OPSMAN_opsman_user_username: $opsman_user_username
     OPSMAN_opsman_user_password: $opsman_user_password
     OPSMAN_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    OPSMAN_opsman_url: $opsman_url
     OPSMAN_opsman_keypair: $opsman_keypair
     OPSMAN_vms_security_group: $vms_security_group
     OPSMAN_trusted_certs: $trusted_certs
@@ -120,6 +121,7 @@ configure-pas:
     PAS_opsman_user_username: $opsman_user_username
     PAS_opsman_user_password: $opsman_user_password
     PAS_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    PAS_opsman_url: $opsman_url
     PAS_cloud_controller_encrypt_key_secret: $cloud_controller_encrypt_key_secret
     PAS_monitor_email: $monitor_email
     PAS_credhub_secret: $credhub_secret
@@ -152,13 +154,16 @@ configure-healthwatch:
     VAR_PREFIX: HW
     HW_opsman_user_username: $opsman_user_username
     HW_opsman_user_password: $opsman_user_password
-    HW_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase    
+    HW_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    HW_opsman_url: $opsman_url
+    HW_bosh_check_client_secret: $bosh_check_client_secret
+    HW_bosh_check_client_id: $bosh_check_client_id
   script:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh
     - tasks/upload-stage-product.sh
-#    - tasks/configure-product.sh
-#    - tasks/upload-stemcell.sh
+    - tasks/configure-product.sh
+    - tasks/upload-stemcell.sh
 
 apply-changes:
   stage: apply-changes
@@ -170,5 +175,7 @@ apply-changes:
     PAS_opsman_user_username: $opsman_user_username
     PAS_opsman_user_password: $opsman_user_password
     PAS_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    PAS_opsman_url: $opsman_url
   script:
+    - tasks/gitlab-interpolate.sh
     - tasks/apply-changes.sh
