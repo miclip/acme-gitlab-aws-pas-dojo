@@ -55,8 +55,11 @@ Note:
     ```
 1. Commit and push repo, GitLab will detect the `gitlab-ci.yml` and kickoff the pipeline. The terraform state will be initialized on S3 and you should end up with the terraformed AWS environment. 
 
-### Configure Opsman & BOSH Director
+### GitLab Environment Variables
 
+| key | Description |
+|-----|-------------|
+|
 
 
 ### Fetch Products
