@@ -8,7 +8,7 @@ stages:
   - configure-opsman
   - configure-pas
   - configure-healthwatch
-#  - apply-changes
+  - apply-changes
 
 variables:
   S3_BUCKET_TERRAFORM: miclip-terraform
