@@ -84,6 +84,8 @@ properties-configuration:
   iaas_configuration:
     additional_cloud_properties: {}
     encrypted: false
+    access_key_id: ((aws_access_key_id))
+    secret_access_key: ((aws_secret_access_key))
     guid: ((iaas_guid))
     key_pair_name: ((iaas_keypair))
     ssh_private_key: ((ssh_private_key))

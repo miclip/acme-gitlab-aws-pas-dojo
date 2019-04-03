@@ -96,6 +96,8 @@ configure-opsman:
     OPSMAN_vms_security_group: $vms_security_group
     OPSMAN_trusted_certs: $trusted_certs
     OPSMAN_opsman_ssh_private_key: $opsman_ssh_private_key
+    OPSMAN_aws_access_key_id: $aws_access_key_id
+    OPSMAN_aws_secret_access_key: $aws_secret_access_key
   script:
    - tasks/gitlab-interpolate.sh
    - tasks/configure-authentication.sh
