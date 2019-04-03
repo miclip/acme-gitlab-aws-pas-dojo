@@ -14,12 +14,12 @@ resource "tls_cert_request" "ssl_csr" {
   key_algorithm   = "RSA"
   private_key_pem = "${tls_private_key.ssl_private_key.private_key_pem}"
 
-  dns_names = "${formatlist("%s.${var.env_name}.${var.dns_suffix}", var.subdomains)}"
+  dns_names = "${formatlist("%s.${var.dns_suffix}", var.subdomains)}"
 
   count = "${length(var.ssl_ca_cert) > 0 ? 1 : 0}"
 
   subject {
-    common_name         = "${var.env_name}.${var.dns_suffix}"
+    common_name         = "${var.dns_suffix}"
     organization        = "Pivotal"
     organizational_unit = "Cloudfoundry"
     country             = "US"
