@@ -7,7 +7,8 @@ stages:
   - setup
   - configure-opsman
   - configure-pas
-  - apply-changes
+  - configure-healthwatch
+#  - apply-changes
 
 variables:
   S3_BUCKET_TERRAFORM: miclip-terraform
@@ -134,6 +135,32 @@ configure-pas:
     - tasks/configure-product.sh
     - tasks/upload-stemcell.sh
     - tasks/assign-stemcell.sh
+
+configure-healthwatch:
+  stage: configure-healthwatch
+  variables:
+    # vars for scripts
+    ENV_FILE: mlsb/env.yml
+    PRODUCT_FILES: healthwatch/downloaded-files
+    CONFIG_FILE: mlsb/healthwatch.yml
+    ASSIGN_CONFIG_FILE: healthwatch/assign-stemcell-config/config.yml
+    PRODUCT_NAME: healthwatch
+    VARS_FILES: vars/mlsb/healthwatch.yml
+    STEMCELL_DIR: healthwatch/downloaded-files
+    OPS_FILES: ""
+    # interpolation
+    FILES_GLOB: "env/mlsb/env.yml vars/mlsb/healthwatch.yml"
+    VAR_PREFIX: HW
+    HW_opsman_user_username: $opsman_user_username
+    HW_opsman_user_password: $opsman_user_password
+    HW_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase    
+  script:
+    - tasks/download-product-s3.sh
+    - tasks/gitlab-interpolate.sh
+    - tasks/upload-stage-product.sh
+#    - tasks/configure-product.sh
+#    - tasks/upload-stemcell.sh
+#    - tasks/assign-stemcell.sh
 
 apply-changes:
   stage: apply-changes
