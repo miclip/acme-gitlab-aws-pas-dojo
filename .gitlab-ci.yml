@@ -124,8 +124,9 @@ configure-pas:
     PAS_credhub_secret: $credhub_secret
     PAS_ssl_cert: $ssl_cert
     PAS_ssl_private_key: $ssl_private_key
-    PAS_uaa_cert_pem: uaa_cert_pem
-    PAS_uaa_cert_private_key: uaa_cert_private_key
+    PAS_uaa_cert_pem: $uaa_cert_pem
+    PAS_uaa_cert_private_key: $uaa_cert_private_key
+    PAS_trusted_certs: $trusted_certs
   script:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh

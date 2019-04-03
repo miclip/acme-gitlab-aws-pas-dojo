@@ -5,7 +5,7 @@ apps_domain: apps.mlsb.miclip.io
 credhub_secret: ((credhub_secret))
 ssl_cert: ((ssl_cert))
 ssl_private_key: ((ssl_private_key))
-trusted_certs: ""
+trusted_certs: ((trusted_certs))
 uaa_cert: ((uaa_cert_pem))
 uaa_private_key: ((uaa_cert_private_key))
 uaa_secret: ((credhub_secret))
