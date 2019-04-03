@@ -1,7 +1,7 @@
 cloud_controller_encrypt_key_secret: ((cloud_controller_encrypt_key_secret))
 monitor_email: ((monitor_email))
-system_domain: sys.mlsb.miclip.io
-apps_domain: apps.mlsb.miclip.io
+system_domain: sys.miclip.io
+apps_domain: apps.miclip.io
 credhub_secret: ((credhub_secret))
 ssl_cert: ((ssl_cert))
 ssl_private_key: ((ssl_private_key))
