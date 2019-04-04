@@ -211,7 +211,7 @@ product-properties:
   .properties.routing_custom_ca_certificates:
     value: ((trusted_certs))
   .properties.routing_disable_http:
-    value: true
+    value: false
   .properties.routing_log_client_ips:
     selected_option: log_client_ips
     value: log_client_ips
