@@ -10,3 +10,4 @@ uaa_cert: ((uaa_cert_pem))
 uaa_private_key: ((uaa_cert_private_key))
 uaa_secret: ((credhub_secret))
 network_name_runtime: pas
+environment: mlsb

@@ -95,7 +95,7 @@ properties-configuration:
   security_configuration:
     generate_vm_passwords: true
     opsmanager_root_ca_trusted_certs: true
-    trusted_certificates: 
+    trusted_certificates: ((trusted_certs))
   syslog_configuration:
     enabled: false
 resource-configuration:
@@ -112,3 +112,12 @@ resource-configuration:
       id: automatic
     internet_connected: false
 vmextensions-configuration:
+  - name: web-lb-security-groups
+    cloud_properties:
+      security_groups: ["web_lb_security_group", "vms_security_group"]
+  - name: ssh-lb-security-groups
+    cloud_properties:
+      security_groups: ["ssh_lb_security_group", "vms_security_group"]
+  - name: tcp-lb-security-groups
+    cloud_properties:
+      security_groups: ["tcp_lb_security_group", "vms_security_group"]

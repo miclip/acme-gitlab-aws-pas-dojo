@@ -16,6 +16,7 @@ variables:
   S3_REGION: us-east-2
   AWS_ACCESS_KEY_ID: $aws_access_key_id
   AWS_SECRET_ACCESS_KEY: $aws_secret_access_key
+  
 
 create-infrastructure:
   stage: setup
@@ -132,6 +133,7 @@ configure-pas:
     PAS_uaa_cert_pem: $uaa_cert_pem
     PAS_uaa_cert_private_key: $uaa_cert_private_key
     PAS_trusted_certs: $trusted_certs
+    PAS_environment: mlsb
   script:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh
