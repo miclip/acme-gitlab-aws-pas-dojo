@@ -5,7 +5,7 @@ locals {
 resource "aws_route53_record" "wildcard_sys_dns" {
   count   = "${local.use_route53 ? 1 : 0}"
   zone_id = "${var.zone_id}"
-  name    = "*.sys.${var.dns_suffix}"
+  name    = "*.system.${var.dns_suffix}"
   type    = "CNAME"
   ttl     = 300
 
@@ -25,7 +25,7 @@ resource "aws_route53_record" "wildcard_apps_dns" {
 resource "aws_route53_record" "ssh" {
   count   = "${local.use_route53 ? 1 : 0}"
   zone_id = "${var.zone_id}"
-  name    = "ssh.sys.${var.dns_suffix}"
+  name    = "ssh.system.${var.dns_suffix}"
   type    = "CNAME"
   ttl     = 300
 
