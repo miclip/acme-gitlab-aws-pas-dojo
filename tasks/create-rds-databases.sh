@@ -5,14 +5,11 @@ main(){
   local url
 
   pushd ${path} > /dev/null
-    terraform output ops_manager_ssh_private_key > /tmp/key
-    rds_address=$(terraform output rds_address)
-    rds_password=$(terraform output rds_password)
+    cat $opsman_ssh_private_key > /tmp/key
     chmod 600 /tmp/key
-    url="$(terraform output ops_manager_dns)"
   popd
 
-  ssh -t -i /tmp/key "ubuntu@${url}"  << EOF
+  ssh -t -i /tmp/key "ubuntu@${opsman_url}"  << EOF
      dbs="boshdb
 account
 app_usage_service
