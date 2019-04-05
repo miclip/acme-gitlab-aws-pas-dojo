@@ -5,7 +5,7 @@ main(){
   local url
 
   pushd ${path} > /dev/null
-    cat $opsman_ssh_private_key > /tmp/key
+    cat ${opsman_ssh_private_key} > /tmp/key
     chmod 600 /tmp/key
   popd
 
