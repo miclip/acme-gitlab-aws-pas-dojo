@@ -2,14 +2,15 @@
 
 main(){
   local path=${1?"Path is required (e.g. terraforming-pas, terraforming-pks, terraforming-control-plane)"}
-  local url
+
+  opsman_url="$(echo $opsman_hostname | sed 's~http[s]*://~~g')"
 
    cat << EOF > /tmp/key
 ${opsman_ssh_private_key}
 EOF
     chmod 600 /tmp/key
 
-  ssh -t -i /tmp/key "ubuntu@${opsman_url}"  << EOF
+  ssh -t -i /tmp/key "ubuntu@${opsman_hostname}"  << EOF
      dbs="boshdb
 account
 app_usage_service
