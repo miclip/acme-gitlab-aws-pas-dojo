@@ -9,8 +9,8 @@ main(){
 ${opsman_ssh_private_key}
 EOF
 
-    chmod 600 /tmp/key
-
+  chmod 600 /tmp/key
+  mknod -m 666 /dev/tty c 5 0
   ssh -v -t -i /tmp/key "ubuntu@${opsman_hostname}"  << EOF
      dbs="boshdb
 account
