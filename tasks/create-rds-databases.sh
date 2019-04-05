@@ -3,7 +3,7 @@
 main(){
   local path=${1?"Path is required (e.g. terraforming-pas, terraforming-pks, terraforming-control-plane)"}
 
-  opsman_url="$(echo $opsman_hostname | sed 's~http[s]*://~~g')"
+  local opsman_hostname="$(echo $opsman_url | sed 's~http[s]*://~~g')"
 
    cat << EOF > /tmp/key
 ${opsman_ssh_private_key}
