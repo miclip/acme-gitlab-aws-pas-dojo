@@ -10,8 +10,7 @@ ${opsman_ssh_private_key}
 EOF
 
   chmod 600 /tmp/key
-  mknod -m 666 /dev/tty c 5 0
-  ssh -v -t -i /tmp/key "ubuntu@${opsman_hostname}"  << EOF
+  ssh -o StrictHostKeyChecking=no -v -t -i /tmp/key "ubuntu@${opsman_hostname}"  << EOF
      dbs="boshdb
 account
 app_usage_service
