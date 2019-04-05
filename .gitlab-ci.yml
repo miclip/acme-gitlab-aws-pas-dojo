@@ -31,6 +31,7 @@ create-infrastructure:
     - terraform init -backend-config="bucket=${S3_BUCKET_TERRAFORM}" -backend-config="key=mlsb/terraform.tfstate" -backend-config="region=${S3_REGION}" terraforming-pas
     - terraform plan -out=pcf.tfplan -var-file=${VARS_FILE} terraforming-pas
     - terraform apply pcf.tfplan
+    - tasks/create-rds-databases.sh terraforming-pas
 
 destroy-infrastructure:
   stage: setup
@@ -134,6 +135,8 @@ configure-pas:
     PAS_uaa_cert_private_key: $uaa_cert_private_key
     PAS_trusted_certs: $trusted_certs
     PAS_environment: mlsb
+    PAS_rds_instance_endpoint: $rds_instance_endpoint
+    PAS_rds_instance_password: $rds_instance_password
   script:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh

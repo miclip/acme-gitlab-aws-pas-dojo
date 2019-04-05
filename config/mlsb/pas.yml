@@ -255,8 +255,77 @@ product-properties:
   .properties.system_blobstore_ccpackage_max_valid_packages_stored:
     value: 2
   .properties.system_database:
-    selected_option: internal_pxc
-    value: internal_pxc
+    selected_option: external
+    value: external
+  .properties.system_database.external.account_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.account_username:
+    value: admin
+  .properties.system_database.external.app_usage_service_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.app_usage_service_username:
+    value: admin
+  .properties.system_database.external.autoscale_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.autoscale_username:
+    value: admin
+  .properties.system_database.external.ccdb_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.ccdb_username:
+    value: admin
+  .properties.system_database.external.credhub_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.credhub_username:
+    value: admin
+  .properties.system_database.external.diego_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.diego_username:
+    value: admin
+  .properties.system_database.external.host:
+    value: ((rds_instance_endpoint))
+  .properties.system_database.external.locket_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.locket_username:
+    value: admin
+  .properties.system_database.external.networkpolicyserver_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.networkpolicyserver_username:
+    value: admin
+  .properties.system_database.external.nfsvolume_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.nfsvolume_username:
+    value: admin
+  .properties.system_database.external.notifications_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.notifications_username:
+    value: admin
+  .properties.system_database.external.port:
+    value: 3306
+  .properties.system_database.external.routing_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.routing_username:
+    value: admin
+  .properties.system_database.external.silk_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.silk_username:
+    value: admin
+  .properties.system_database.external.uaa_password:
+    value:
+      secret: ((rds_instance_password))
+  .properties.system_database.external.uaa_username:
+    value: admin
   .properties.tcp_routing:
     selected_option: disable
     value: disable
