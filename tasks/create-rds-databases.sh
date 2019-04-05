@@ -8,10 +8,10 @@ main(){
    cat << EOF > /tmp/key
 ${opsman_ssh_private_key}
 EOF
-    cat /tmp/key
+
     chmod 600 /tmp/key
 
-  ssh -t -i /tmp/key "ubuntu@${opsman_hostname}"  << EOF
+  ssh -v -t -i /tmp/key "ubuntu@${opsman_hostname}"  << EOF
      dbs="boshdb
 account
 app_usage_service
