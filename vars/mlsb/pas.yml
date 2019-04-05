@@ -13,3 +13,14 @@ network_name_runtime: pas
 environment: mlsb
 rds_instance_endpoint: ((rds_instance_endpoint))
 rds_instance_password: ((rds_instance_password))
+aws_region: us-east-2
+aws_secret_access_key: ((aws_secret_access_key))
+aws_access_key_id: ((aws_access_key_id))
+aws_s3_endpoint: https://s3.us-east-2.amazonaws.com
+aws_s2_buildpack_backup: mlsb-buildpacks-backup-bucket-89034
+aws_s2_buildpack: mlsb-buildpacks-bucket-89034
+aws_s3_droplets_backup: mlsb-droplets-backup-bucket-89034
+aws_s3_droplets: mlsb-droplets-bucket-89034
+aws_s3_packages_backup: mlsb-packages-backup-bucket-89034
+aws_s3_packages: mlsb-packages-bucket-89034
+aws_s3_resources: mlsb-resources-bucket-89034

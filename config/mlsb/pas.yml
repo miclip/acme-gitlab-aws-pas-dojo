@@ -248,8 +248,41 @@ product-properties:
   .properties.syslog_use_tcp_for_file_forwarding_local_transport:
     value: false
   .properties.system_blobstore:
-    selected_option: internal
-    value: internal
+      selected_option: external
+      value: external
+  .properties.system_blobstore.external.access_key:
+      value: ((aws_access_key_id))
+  .properties.system_blobstore.external.backup_region:
+      value: ((aws_region))
+  .properties.system_blobstore.external.buildpacks_backup_bucket:
+    value: ((aws_s2_buildpack_backup))
+  .properties.system_blobstore.external.buildpacks_bucket:
+    value: ((aws_s2_buildpack))
+  .properties.system_blobstore.external.droplets_backup_bucket:
+    value: ((aws_s3_droplets_backup))
+  .properties.system_blobstore.external.droplets_bucket:
+    value: ((aws_s3_droplets))
+  .properties.system_blobstore.external.encryption:
+    value: false
+  .properties.system_blobstore.external.endpoint:
+    value: ((aws_s3_endpoint))
+  .properties.system_blobstore.external.iam_instance_profile_authentication:
+    value: false
+  .properties.system_blobstore.external.packages_backup_bucket:
+    value: ((aws_s3_packages_backup))
+  .properties.system_blobstore.external.packages_bucket:
+    value: ((aws_s3_packages))
+  .properties.system_blobstore.external.region:
+    value: aws_region
+  .properties.system_blobstore.external.resources_bucket:
+    value: ((aws_s3_resources))
+  .properties.system_blobstore.external.secret_key:
+    value:
+      secret: ((aws_secret_access_key))
+  .properties.system_blobstore.external.signature_version:
+    value: "4"
+  .properties.system_blobstore.external.versioning:
+    value: false
   .properties.system_blobstore_ccdroplet_max_staged_droplets_stored:
     value: 2
   .properties.system_blobstore_ccpackage_max_valid_packages_stored:

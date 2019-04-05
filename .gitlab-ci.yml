@@ -137,6 +137,8 @@ configure-pas:
     PAS_environment: mlsb
     PAS_rds_instance_endpoint: $rds_instance_endpoint
     PAS_rds_instance_password: $rds_instance_password
+    PAS_aws_secret_access_key: $aws_secret_access_key
+    PAS_aws_access_key_id: $aws_access_key_id
   script:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh
