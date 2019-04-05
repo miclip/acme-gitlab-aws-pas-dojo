@@ -4,10 +4,10 @@ main(){
   local path=${1?"Path is required (e.g. terraforming-pas, terraforming-pks, terraforming-control-plane)"}
   local url
 
-  pushd ${path} > /dev/null
-    cat "${opsman_ssh_private_key}" > /tmp/key
+   cat << EOF > /tmp/key
+${opsman_ssh_private_key}
+EOF
     chmod 600 /tmp/key
-  popd
 
   ssh -t -i /tmp/key "ubuntu@${opsman_url}"  << EOF
      dbs="boshdb
