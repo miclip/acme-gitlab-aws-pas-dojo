@@ -28,7 +28,7 @@ routing
 silk
 uaa"
      for i in \$dbs; do
-         mysql -h ${rds_address} -u admin -p${rds_password}  -e "CREATE DATABASE \$i;"
+         mysql -h ${rds_instance_endpoint} -u admin -p${rds_instance_password}  -e "CREATE DATABASE \$i;"
      done;
 EOF
 }
