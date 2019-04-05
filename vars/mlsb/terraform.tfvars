@@ -7,7 +7,7 @@ create_versioned_pas_buckets    =       true
 create_backup_pas_buckets       =       true
 ops_manager_vm                  =       true
 ops_manager_ami                 =       "ami-01ef505e19fca5403"
-rds_instance_count              =       2
+rds_instance_count              =       1
 tags                            =       {
     Team = "miclip"
 }
