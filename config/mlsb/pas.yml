@@ -273,7 +273,7 @@ product-properties:
   .properties.system_blobstore.external.packages_bucket:
     value: ((aws_s3_packages))
   .properties.system_blobstore.external.region:
-    value: aws_region
+    value: ((aws_region))
   .properties.system_blobstore.external.resources_bucket:
     value: ((aws_s3_resources))
   .properties.system_blobstore.external.secret_key:
