@@ -8,7 +8,9 @@ stages:
   - configure-opsman
   - configure-pas
   - configure-healthwatch
-  - apply-changes
+  - apply-pas-changes
+  - configure-mysql
+  - apply-product-changes
 
 variables:
   S3_BUCKET_TERRAFORM: miclip-terraform
@@ -190,8 +192,49 @@ configure-healthwatch:
     - tasks/configure-product.sh
     - tasks/upload-stemcell.sh
 
-apply-changes:
-  stage: apply-changes
+apply-pas-changes:
+  stage: apply-pas-changes
+  variables:
+    FILES_GLOB: "env/mlsb/env.yml"
+    ENV_FILE: mlsb/env.yml
+    VAR_PREFIX: PAS
+    PAS_pivnet_token: $pivnet_token
+    PAS_opsman_user_username: $opsman_user_username
+    PAS_opsman_user_password: $opsman_user_password
+    PAS_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    PAS_opsman_url: $opsman_url
+  script:
+    - tasks/gitlab-interpolate.sh
+    - tasks/apply-changes.sh
+
+configure-mysql:
+  stage: configure-mysql
+  variables:
+    # vars for scripts
+    ENV_FILE: mlsb/env.yml
+    PRODUCT_FILES: healthwatch/downloaded-files
+    CONFIG_FILE: mlsb/mysql.yml
+    ASSIGN_CONFIG_FILE: mysql/assign-stemcell-config/config.yml
+    PRODUCT_NAME: mysql
+    VARS_FILES: vars/mlsb/mysql.yml
+    STEMCELL_DIR: mysql/downloaded-files
+    OPS_FILES: ""
+    # interpolation
+    FILES_GLOB: "env/mlsb/env.yml vars/mlsb/mysql.yml"
+    VAR_PREFIX: VAR
+    VAR_opsman_user_username: $opsman_user_username
+    VAR_opsman_user_password: $opsman_user_password
+    VAR_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
+    VAR_opsman_url: $opsman_url
+  script:
+    - tasks/download-product-s3.sh
+    - tasks/gitlab-interpolate.sh
+    - tasks/upload-stage-product.sh
+   # - tasks/configure-product.sh
+   # - tasks/upload-stemcell.sh
+
+apply-product-changes:
+  stage: apply-product-changes
   variables:
     FILES_GLOB: "env/mlsb/env.yml"
     ENV_FILE: mlsb/env.yml
