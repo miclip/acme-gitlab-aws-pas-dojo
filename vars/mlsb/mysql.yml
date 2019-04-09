@@ -1,0 +1,6 @@
+aws_region: us-east-2
+aws_secret_access_key: ((aws_secret_access_key))
+aws_access_key_id: ((aws_access_key_id))
+aws_s3_endpoint: https://s3.us-east-2.amazonaws.com
+aws_backet_name: miclip-terraform
+monitor_email: ((monitor_email))

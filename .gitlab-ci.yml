@@ -230,8 +230,8 @@ configure-mysql:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh
     - tasks/upload-stage-product.sh
-   # - tasks/configure-product.sh
-   # - tasks/upload-stemcell.sh
+    - tasks/configure-product.sh
+    - tasks/upload-stemcell.sh
 
 apply-product-changes:
   stage: apply-product-changes
