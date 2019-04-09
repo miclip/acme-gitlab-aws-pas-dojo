@@ -79,6 +79,22 @@ fetch-pas:
    - tasks/download-product.sh
    - tasks/upload-product-s3.sh
 
+fetch-mysql:
+  stage: setup
+  when: manual
+  variables:
+    CONFIG_FILE: download-product-configs/mysql.yml
+    VARS_FILES: ""
+    PRODUCT_NAME: mysql
+    # interpolation
+    FILES_GLOB: config/download-product-configs/mysql.yml
+    VAR_PREFIX: DLP
+    DLP_pivnet_token: $pivnet_token    
+  script: 
+   - tasks/gitlab-interpolate.sh
+   - tasks/download-product.sh
+   - tasks/upload-product-s3.sh
+
 configure-opsman:
   stage: configure-opsman
   variables:
