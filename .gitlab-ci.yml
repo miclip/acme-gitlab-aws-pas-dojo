@@ -212,7 +212,7 @@ configure-mysql:
   variables:
     # vars for scripts
     ENV_FILE: mlsb/env.yml
-    PRODUCT_FILES: healthwatch/downloaded-files
+    PRODUCT_FILES: mysql/downloaded-files
     CONFIG_FILE: mlsb/mysql.yml
     ASSIGN_CONFIG_FILE: mysql/assign-stemcell-config/config.yml
     PRODUCT_NAME: mysql
