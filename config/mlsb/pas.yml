@@ -502,19 +502,19 @@ resource-config:
       id: automatic
     internet_connected: false
   mysql:
-    instances: automatic
+    instances: 0
     persistent_disk:
       size_mb: automatic
     instance_type:
       id: automatic
     internet_connected: false
   mysql_monitor:
-    instances: automatic
+    instances: 0
     instance_type:
       id: automatic
     internet_connected: false
   mysql_proxy:
-    instances: automatic
+    instances: 0
     instance_type:
       id: automatic
     internet_connected: false
@@ -524,7 +524,7 @@ resource-config:
       id: automatic
     internet_connected: false
   nfs_server:
-    instances: automatic
+    instances: 0
     persistent_disk:
       size_mb: automatic
     instance_type:
