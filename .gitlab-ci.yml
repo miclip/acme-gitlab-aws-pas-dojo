@@ -226,6 +226,9 @@ configure-mysql:
     VAR_opsman_user_password: $opsman_user_password
     VAR_ops_manager_decryption_passphrase: $ops_manager_decryption_passphrase
     VAR_opsman_url: $opsman_url
+    VAR_monitor_email: $monitor_email
+    VAR_aws_secret_access_key: $aws_secret_access_key
+    VAR_aws_access_key_id: $aws_access_key_id
   script:
     - tasks/download-product-s3.sh
     - tasks/gitlab-interpolate.sh
