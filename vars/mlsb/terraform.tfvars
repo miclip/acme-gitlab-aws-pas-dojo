@@ -9,5 +9,6 @@ ops_manager_vm                  =       true
 ops_manager_ami                 =       "ami-01ef505e19fca5403"
 rds_instance_count              =       1
 tags                            =       {
-    Team = "miclip"
+    Team = "miclip",
+    do_not_delete= true
 }
